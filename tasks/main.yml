@@ -1,0 +1,108 @@
+---
+
+# Install common dependencies
+- name: Install dependencies
+  package:
+    name: "{{ item.name }}"
+    state: present
+  with_items: 
+    - "{{ packages }}"
+  tags: 
+    - common
+
+# Create apache2 service
+- name: Enable apache2 service
+  service: 
+    name: apache2
+    state: started
+    enabled: yes
+  tags: 
+    - common
+
+# Create common directories
+- name: Creates directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+  with_items: 
+    - "{{ directories }}"
+  tags: 
+    - common
+
+# Create specific directories
+- name: Portal directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+  with_items: 
+    - "{{ portal.directories }}"
+  tags: 
+    - portal
+
+- name: Wordpress directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+  with_items: 
+    - "{{ wordpress.directories }}"
+  tags: 
+    - wordpress
+
+- name: Moodle directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+  with_items: 
+    - "{{ moodle.directories }}"
+  tags: 
+    - moodle
+
+# Config apache
+- name: Config fqdn
+  command: >
+    echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf && sudo a2enconf fqdn
+- name: enabled mod_rewrite
+  apache2_module: 
+    name: rewrite
+    state: present
+  notify:
+    - restart apache
+  tags: 
+    - common
+
+# VH config
+- name: Create Portal virtual hosts config
+  template:
+    src: templates/vh.portal.conf.j2
+    dest: /etc/apache2/sites-available/agora.conf
+  notify:
+    - restart apache
+  tags: 
+    - portal
+
+- name: Create Wordpress/Moodle virtual hosts config
+  template:
+    src: templates/vh.conf.j2
+    dest: /etc/apache2/sites-available/agora.conf
+  notify:
+    - restart apache
+  tags: [wordpress, moodle]
+
+- name: Remove default config
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify:
+    - restart apache
+  tags: 
+    - common
+
+- name: Create symbolic link
+  file:
+    src: /etc/apache2/sites-available/agora.conf
+    dest: /etc/apache2/sites-enabled/agora.conf
+    state: link
+  notify:
+    - restart apache
+  tags: 
+    - common

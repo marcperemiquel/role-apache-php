@@ -1,0 +1,47 @@
+---
+
+packages:
+  - name: apache2
+  - name: php7.3
+  - name: php7.3-curl
+  - name: php7.3-tidy
+  - name: php7.3-gd
+  - name: php7.3-xml
+  - name: php7.3-xmlrpc
+  - name: php7.3-intl
+  - name: php7.3-cli
+  - name: php-pear
+  - name: php7.3-dev
+  - name: php7.3-ldap
+  - name: libapache2-mod-php7.3
+  - name: php-codesniffer
+  - name: php7.3-mbstring
+  - name: php7.3-pgsql
+  - name: php7.3-mysql
+  - name: php-gettext
+  - name: php7.3-zip
+  - name: php7.3-soap
+
+directories:
+  - path: /dades
+  - path: /dades/data
+  - path: /dades/html
+  - path: /dades/syncdata
+
+moodle:
+  directories:
+    - path: /dades/data/moodledata
+    - path: /dades/localmuc
+
+wordpres:
+  directories:
+    - path: /dades/data/wpdata
+
+portal:
+  directories:
+    - path: /dades/data/wpdata
+    - path: /dades/data/moodledata
+    - path: /dades/data/portaldata
+    - path: /dades/data/uploads
+    - path: /dades/adminInfo
+    - path: /dades/syncdata

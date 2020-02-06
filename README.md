@@ -1,3 +1,4 @@
-# role-apache-php
+## Purpose
 
-Ansible role Apache & PHP
+This ansible role contains general tasks to download and install Apache and PHP.
+
