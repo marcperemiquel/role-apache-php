@@ -33,7 +33,7 @@ moodle:
     - path: /dades/data/moodledata
     - path: /dades/localmuc
 
-wordpres:
+wordpress:
   directories:
     - path: /dades/data/wpdata
 
