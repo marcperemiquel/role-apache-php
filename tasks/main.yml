@@ -112,7 +112,8 @@
 - name: Config php
   command: >
     {{ item }}
-  warn: false
+  args:
+      warn: false
   with_items: 
     - "{{ php.commands }}"
   notify:
@@ -124,7 +125,8 @@
 - name: Config opcache
   command: >
     {{ item }}
-  warn: false
+  args:
+      warn: false
   with_items: 
     - "{{ opcache.commands }}"
   notify:
