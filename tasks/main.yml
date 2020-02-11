@@ -106,6 +106,28 @@
   tags: 
     - common
 
+# Config php
+- name: Config php
+  command: >
+    {{ item }}
+  with_items: 
+    - "{{ php.commands }}"
+  notify:
+    - restart apache
+  tags: 
+    - common
+
+# Config opcache
+- name: Config opcache
+  command: >
+    {{ item }}
+  with_items: 
+    - "{{ opcache.commands }}"
+  notify:
+    - restart apache
+  tags: 
+    - common
+
 - name: Create symbolic link
   file:
     src: /etc/apache2/sites-available/agora.conf
