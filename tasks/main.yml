@@ -62,7 +62,7 @@
   command: >
     a2enconf {{ item }}
   args:
-    creates: "/etc/apache2/conf-enabled/{{ item }}.conf"
+    creates: "/etc/apache2/conf-available/{{ item }}.conf"
   with_items: 
     - fqdn
   notify:
