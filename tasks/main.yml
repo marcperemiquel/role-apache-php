@@ -58,21 +58,26 @@
     - moodle
 
 # Config apache
-- name: Enabling conf fqdn
-  command: >
-    a2enconf {{ item }}
-  args:
-    creates: "/etc/apache2/conf-available/{{ item }}.conf"
-  with_items: 
-    - fqdn
-  notify:
-    - restart apache
-  tags: 
-    - common
 - name: Enable mod_rewrite
   apache2_module: 
     name: rewrite
     state: present
+  notify:
+    - restart apache
+  tags: 
+    - common
+- name: Conf fqdn
+  command: echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
+  tags: 
+    - common
+- name: Conf fqdn
+  command: sudo cat /etc/apache2/conf-available/fqdn.conf
+  tags: 
+    - common
+- name: Enable a2enconf
+  command: sudo a2enconf {{ item }}
+  with_items: 
+    - fqdn
   notify:
     - restart apache
   tags: 
