@@ -58,14 +58,13 @@
     - moodle
 
 # Config apache
-- name: Config fqdn
+- name: Enabling conf fqdn
   command: >
-    echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
-  tags: 
-    - common
-- name: Enable fqdn
-  command: >
-    a2enconf fqdn
+    a2enconf {{ item }}
+  args:
+    creates: "/etc/apache2/conf-enabled/{{ item }}.conf"
+  with_items: 
+    - fqdn
   notify:
     - restart apache
   tags: 
