@@ -60,8 +60,17 @@
 # Config apache
 - name: Config fqdn
   command: >
-    echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf && sudo a2enconf fqdn
-- name: enabled mod_rewrite
+    echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf
+  tags: 
+    - common
+- name: Enable fqdn
+  command: >
+    a2enconf fqdn
+  notify:
+    - restart apache
+  tags: 
+    - common
+- name: Enable mod_rewrite
   apache2_module: 
     name: rewrite
     state: present
