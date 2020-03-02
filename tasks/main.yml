@@ -108,6 +108,16 @@
   tags: 
     - common
 
+- name: Create symbolic link
+  file:
+    src: /etc/apache2/sites-available/agora.conf
+    dest: /etc/apache2/sites-enabled/agora.conf
+    state: link
+  notify:
+    - restart apache
+  tags: 
+    - common
+
 # Config php
 - name: Config php
   command: >
@@ -134,12 +144,3 @@
   tags: 
     - common
 
-- name: Create symbolic link
-  file:
-    src: /etc/apache2/sites-available/agora.conf
-    dest: /etc/apache2/sites-enabled/agora.conf
-    state: link
-  notify:
-    - restart apache
-  tags: 
-    - common

@@ -33,6 +33,8 @@ directories:
 moodle:
   directories:
     - path: /dades/data/moodledata
+    - path: /dades/data/portaldata
+    - path: /dades/adminInfo
     - path: /dades/localmuc
 
 wordpress:
@@ -46,7 +48,6 @@ portal:
     - path: /dades/data/portaldata
     - path: /dades/data/uploads
     - path: /dades/adminInfo
-    - path: /dades/syncdata
 
 php:
   commands:
