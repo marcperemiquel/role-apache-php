@@ -5,18 +5,28 @@
   package:
     name: "{{ item.name }}"
     state: present
-  with_items: 
+  with_items:
     - "{{ packages }}"
-  tags: 
+  tags:
     - common
+
+# Install specific dependencies
+- name: Portal dependencies
+  file:
+    path: "{{ item.name }}"
+    state: present
+  with_items:
+    - "{{ portal.packages }}"
+  tags:
+    - portal
 
 # Create apache2 service
 - name: Enable apache2 service
-  service: 
+  service:
     name: apache2
     state: started
     enabled: yes
-  tags: 
+  tags:
     - common
 
 # Create common directories
@@ -24,9 +34,9 @@
   file:
     path: "{{ item.path }}"
     state: directory
-  with_items: 
+  with_items:
     - "{{ directories }}"
-  tags: 
+  tags:
     - common
 
 # Create specific directories
@@ -34,51 +44,51 @@
   file:
     path: "{{ item.path }}"
     state: directory
-  with_items: 
+  with_items:
     - "{{ portal.directories }}"
-  tags: 
+  tags:
     - portal
 
 - name: Wordpress directories
   file:
     path: "{{ item.path }}"
     state: directory
-  with_items: 
+  with_items:
     - "{{ wordpress.directories }}"
-  tags: 
+  tags:
     - wordpress
 
 - name: Moodle directories
   file:
     path: "{{ item.path }}"
     state: directory
-  with_items: 
+  with_items:
     - "{{ moodle.directories }}"
-  tags: 
+  tags:
     - moodle
 
 # Config apache
 - name: Enable mod_rewrite
-  apache2_module: 
+  apache2_module:
     name: rewrite
     state: present
   notify:
     - restart apache
-  tags: 
+  tags:
     - common
 - name: Conf fqdn
   copy:
     content: "ServerName localhost"
     dest: /etc/apache2/conf-available/fqdn.conf
-  tags: 
+  tags:
     - common
 - name: Enable a2enconf
   command: a2enconf {{ item }}
-  with_items: 
+  with_items:
     - fqdn
   notify:
     - restart apache
-  tags: 
+  tags:
     - common
 
 # VH config
@@ -88,7 +98,7 @@
     dest: /etc/apache2/sites-available/agora.conf
   notify:
     - restart apache
-  tags: 
+  tags:
     - portal
 
 - name: Create Wordpress/Moodle virtual hosts config
@@ -105,7 +115,7 @@
     state: absent
   notify:
     - restart apache
-  tags: 
+  tags:
     - common
 
 - name: Create symbolic link
@@ -115,7 +125,7 @@
     state: link
   notify:
     - restart apache
-  tags: 
+  tags:
     - common
 
 # Config php
@@ -124,11 +134,11 @@
     {{ item }}
   args:
       warn: false
-  with_items: 
+  with_items:
     - "{{ php.commands }}"
   notify:
     - restart apache
-  tags: 
+  tags:
     - common
 
 # Config opcache
@@ -137,10 +147,9 @@
     {{ item }}
   args:
       warn: false
-  with_items: 
+  with_items:
     - "{{ opcache.commands }}"
   notify:
     - restart apache
-  tags: 
+  tags:
     - common
-

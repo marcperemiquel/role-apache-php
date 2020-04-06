@@ -21,21 +21,27 @@ packages:
   - name: php-gettext
   - name: php7.3-zip
   - name: php7.3-soap
-  - name: php7.3-memcached
-  - name: php-redis
+
+portal:
+  packages:
+    - name: php7.3-memcached
+    - name: php-redis
 
 directories:
   - path: /dades
   - path: /dades/data
+  - path: /dades/data/adminInfo
+  - path: /dades/data/portaldata
+  - path: /dades/data/portaldata/data
+  - path: /dades/data/portaldata/pnTemp
   - path: /dades/html
-  - path: /dades/syncdata
+  - path: /dades/localdata
+  - path: /dades/localdata/syncdata
 
 moodle:
   directories:
     - path: /dades/data/moodledata
-    - path: /dades/data/portaldata
-    - path: /dades/adminInfo
-    - path: /dades/localmuc
+    - path: /dades/localdata/localmuc
 
 wordpress:
   directories:
@@ -43,11 +49,10 @@ wordpress:
 
 portal:
   directories:
-    - path: /dades/data/wpdata
     - path: /dades/data/moodledata
-    - path: /dades/data/portaldata
     - path: /dades/data/uploads
-    - path: /dades/adminInfo
+    - path: /dades/data/wpdata
+    - path: /dades/localdata/localmuc
 
 php:
   commands:
