@@ -22,11 +22,6 @@ packages:
   - name: php7.3-zip
   - name: php7.3-soap
 
-portal:
-  packages:
-    - name: php7.3-memcached
-    - name: php-redis
-
 directories:
   - path: /dades
   - path: /dades/data
@@ -39,15 +34,20 @@ directories:
   - path: /dades/localdata/syncdata
 
 moodle:
+  packages:
   directories:
     - path: /dades/data/moodledata
     - path: /dades/localdata/localmuc
 
 wordpress:
+  packages:
   directories:
     - path: /dades/data/wpdata
 
 portal:
+  packages:
+    - name: php7.3-memcached
+    - name: php-redis
   directories:
     - path: /dades/data/moodledata
     - path: /dades/data/uploads
