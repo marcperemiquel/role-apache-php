@@ -60,7 +60,7 @@ php:
     - sed -i "s/memory_limit = .*/memory_limit = 2048M/" /etc/php/7.3/apache2/php.ini
     - sed -i "s/post_max_size = .*/post_max_size = 10M/" /etc/php/7.3/apache2/php.ini
     - sed -i "s/upload_max_filesize = .*/upload_max_filesize = 10M/" /etc/php/7.3/apache2/php.ini
-    - sed -i "s/allow_url_fopen = .*/allow_url_fopen = Off/" /etc/php/7.3/apache2/php.ini
+    - sed -i "s/allow_url_fopen = .*/allow_url_fopen = On/" /etc/php/7.3/apache2/php.ini
     - sed -i "s/max_execution_time = .*/max_execution_time = 300/" /etc/php/7.3/apache2/php.ini
     - sed -i '$ a\date.timezone = "Europe/Madrid"' /etc/php/7.3/cli/php.ini
     - sed -i "s/max_execution_time = .*/max_execution_time = 900/" /etc/php/7.3/cli/php.ini
